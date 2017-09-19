@@ -1,0 +1,194 @@
+<?php
+
+/**
+ * Module of Reports
+ */
+
+function reports_gea_menu(){
+	/*$items['view/test'] = array(
+		'title' => 'Test - Drupal', 
+		'page callback' => 'Mad_AppMiMovistar_reporteEvolutivoCall', 
+		'expanded' => TRUE );*/
+
+	//Web Service
+  	 $items['reports_gea'] = array(
+    	'title' =>  'Mad GEA Ws',
+    	'description' => 'Mad de iBot GEA',
+    	'page callback' => 'ws_Mad_iBot_main',
+    	'access callback' => 1,
+    	'access arguments' => array('access content'),
+    	'file' => 'include/ws_mad_iBot.inc',
+    	'type' => MENU_CALLBACK
+  	);
+
+  	//Reporte 1: Tiempos de respueta del servidor 
+  	$items['reportes/tiemposServidor'] = array(
+		'title' => 'Reporte de Tiempos del servidor', 
+		'page callback' => 'reports_gea_serverTimeResponse', 
+		'access callback' => 'user_is_logged_in', 
+		'access arguments' => array('Reportes App'),
+		'expanded' => TRUE ); 
+
+
+  	//Reporte 2: Preguntas mas contestadas.
+	$items['reportes/preguntas'] = array(
+		'title' => 'Reporte de Preguntas más contestadas', 
+		'page callback' => 'reports_gea_mostAnsweredQuestions', 
+		'access callback' => 'user_is_logged_in', 
+		'access arguments' => array('Reportes App'),
+		'expanded' => TRUE ); 
+	
+	//Reportes 3: Contextos mas utilizados
+	$items['reportes/contextos'] = array(
+		'title' => 'Reporte de Contextos más utilizados', 
+		'page callback' => 'reports_gea_contextosUtilizados', 
+		'access callback' => 'user_is_logged_in', 
+		'access arguments' => array('Reportes App'),
+		'expanded' => TRUE );
+
+	//Reportes 4: Numero de transacciones
+	$items['reportes/numeroTransacciones'] = array(
+		'title' => 'Reporte de número de transacciones', 
+		'page callback' => 'reports_gea_numberOfTransactions', 
+		'access callback' => 'user_is_logged_in', 
+		'access arguments' => array('Reportes App'),
+		'expanded' => TRUE );
+
+	//Reportes 5: Numero de transacciones
+	$items['reportes/pregPorContexto'] = array(
+		'title' => 'Reporte de Preguntas por contextos', 
+		'page callback' => 'reports_gea_questionsByContexts', 
+		'access callback' => 'user_is_logged_in', 
+		'access arguments' => array('Reportes App'),
+		'expanded' => TRUE );
+
+
+	
+
+	return $items;
+}
+
+////////////////////////////////////////////// CALLBACKS ////////////////////////////////////////////////////////
+
+//Reporte 1 -> CALLBACK: Tiempos de respuesta del servidor
+function reports_gea_serverTimeResponse(){
+	$themePath = drupal_get_path('module', 'reports_gea');
+    addReportLibs($themePath);
+	drupal_add_js($themePath . '/view/reportes/serverTimeResponse/reports_gea_serverTimeResponse.js');	
+	return theme('reports_gea_serverTimeResponse');
+}
+
+
+
+//Reporte 2->CALLBACK:CALLBACK: Contextos mas utilizados
+function reports_gea_contextosUtilizados(){
+	$themePath = drupal_get_path('module', 'reports_gea');
+    addReportLibs($themePath);
+	drupal_add_js($themePath . '/view/reportes/contextosUtilizados/reports_gea_contextosUtilizados.js');	
+	return theme('reports_gea_contextosUtilizados');
+	
+}
+
+//Reporte 3-> CALLBACK:CALLBACK: Preguntas mas contestadas
+function reports_gea_mostAnsweredQuestions(){
+	$themePath = drupal_get_path('module', 'reports_gea');
+    addReportLibs($themePath);
+	drupal_add_js($themePath . '/view/reportes/mostAnsweredQuestions/reports_gea_mostAnsweredQuestions.js');	
+	return theme('reports_gea_mostAnsweredQuestions');
+
+}
+
+//Reporte 4-> CALLBACK:CALLBACK: Preguntas mas contestadas
+function reports_gea_numberOfTransactions(){
+	$themePath = drupal_get_path('module', 'reports_gea');
+    addReportLibs($themePath);
+	drupal_add_js($themePath . '/view/reportes/numberOfTransactions/reports_gea_numberOfTransactions.js');	
+	return theme('reports_gea_numberOfTransactions');
+}
+
+function reports_gea_questionsByContexts(){
+	$themePath = drupal_get_path('module', 'reports_gea');
+    addReportLibs($themePath);
+	drupal_add_js($themePath . '/view/reportes/questionsByContexts/reports_gea_questionsByContexts.js');	
+	return theme('reports_gea_questionsByContexts');
+}
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////// THEME TO SHOW TEMPPLATE ////////////////////////////////////
+function reports_gea_theme(){
+	return array(
+
+	'reports_gea_serverTimeResponse' => array(
+		'render element' => 'element', 
+		'template' => 'view/reportes/serverTimeResponse/reports_gea_serverTimeResponse'),		
+	 //Template: Preguntas mas contestadas
+	'reports_gea_mostAnsweredQuestions' => array(
+		'render element' => 'element', 
+		'template' => 'view/reportes/mostAnsweredQuestions/reports_gea_mostAnsweredQuestions'),
+	//Template:Contextos mas usados
+    'reports_gea_contextosUtilizados' => array(
+		'render element' => 'element', 
+		'template' => 'view/reportes/contextosUtilizados/reports_gea_contextosUtilizados'),
+    'reports_gea_numberOfTransactions' => array(
+		'render element' => 'element', 
+		'template' => 'view/reportes/numberOfTransactions/reports_gea_numberOfTransactions'),
+    'reports_gea_questionsByContexts' => array(
+		'render element' => 'element', 
+		'template' => 'view/reportes/questionsByContexts/reports_gea_questionsByContexts')    
+    );
+}
+
+
+
+///////////////////////////////////////////// ADD LIBRARIES //////////////////////////////////////////////////
+function add_libraries($themePath)
+{
+ 	drupal_add_css($themePath. '/view/libs/bootstrap/bootstrap-table.css');	
+ 	drupal_add_js($themePath . '/view/libs/bootstrap/bootstrap-table.js');	
+ 	drupal_add_js($themePath . '/view/libs/bootbox.min.js');	
+ 	drupal_add_js($themePath . '/view/libs/dialogs.js');	
+	drupal_add_js($themePath . '/view/libs/ws_ReportsGea.js');	
+ }
+
+function addReportLibs($themePath)
+{
+ 	add_libraries($themePath);
+	
+	drupal_add_js($themePath . '/view/libs/dialogs/bootstrap-dialog.js');	
+ 	drupal_add_css($themePath. '/view/libs/dialogs/bootstrap-dialog.css');	
+	
+	drupal_add_css($themePath. '/view/libs/bootstrap/bootstrap-table.css');	
+ 	drupal_add_js($themePath . '/view/libs/bootstrap/bootstrap-table.js');	
+ 	drupal_add_js($themePath . '/view/libs/bootbox.min.js');	
+ 	drupal_add_js($themePath . '/view/libs/dialogs.js');	
+	drupal_add_js($themePath . '/view/libs/ws_ReportsGea.js');	
+	
+	drupal_add_js($themePath . '/view/libs/bootstrap/export/tableExport.js');
+	drupal_add_js($themePath . '/view/libs/bootstrap/export/bootstrap-table-export.js');
+	drupal_add_js($themePath . '/view/libs/bootstrap/export/base64.js');
+	
+	drupal_add_js('https://www.google.com/jsapi', 'external');
+	drupal_add_js($themePath . '/view/libs/slider/slider.js');
+	drupal_add_css($themePath . '/view/libs/slider/slider.css');
+	
+	drupal_add_js($themePath . '/view/libs/daterangePicker/moment.min.js');
+	
+	drupal_add_js($themePath . '/view/libs/datetimePicker/dateTimePicker.js');
+	drupal_add_css($themePath . '/view/libs/datetimePicker/dateTimePicker.css');
+	
+	drupal_add_js($themePath . '/view/libs/daterangePicker/daterangepicker.js');
+	drupal_add_css($themePath . '/view/libs/daterangePicker/daterangepicker-bs3.css');
+		
+	
+}
+
+?>

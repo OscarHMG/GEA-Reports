@@ -1,0 +1,4 @@
+name = "Reportes GEA - iBot"
+description = "Drupal module to display statistics and reports"
+package = "GEA Reports - iBot"
+core = 7.x

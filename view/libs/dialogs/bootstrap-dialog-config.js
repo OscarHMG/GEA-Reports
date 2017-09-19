@@ -1,0 +1,9 @@
+BootstrapDialog.DEFAULT_TEXTS[BootstrapDialog.TYPE_DEFAULT] = 'Información';
+BootstrapDialog.DEFAULT_TEXTS[BootstrapDialog.TYPE_INFO] = 'Información';
+BootstrapDialog.DEFAULT_TEXTS[BootstrapDialog.TYPE_PRIMARY] = 'Información';
+BootstrapDialog.DEFAULT_TEXTS[BootstrapDialog.TYPE_SUCCESS] = 'Success';
+BootstrapDialog.DEFAULT_TEXTS[BootstrapDialog.TYPE_WARNING] = 'Warning';
+BootstrapDialog.DEFAULT_TEXTS[BootstrapDialog.TYPE_DANGER] = 'Danger';
+BootstrapDialog.DEFAULT_TEXTS['OK'] = 'OK';
+BootstrapDialog.DEFAULT_TEXTS['CANCEL'] = 'Cancel';
+BootstrapDialog.DEFAULT_TEXTS['CONFIRM'] = 'Confirmation';
